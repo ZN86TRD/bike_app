@@ -1,24 +1,26 @@
-# README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# RIDE WITH
+## サイト概要
+### サイトテーマ
+自転車が趣味の人たちがつながれるコミュニティサイト
+​
+### テーマを選んだ理由
+あまり自転車特化型のサイトを見かけることがなかったので、同じ趣味を持つ人たちでそれぞれのカスタムやドレスアップを共有できるサイトがあればいいなと思い、このようなテーマにしようと考えました。
+おすすめのルート、スポットのシェアやツーリングの募集など自転車好きがつながることができるアプリケーションです。
+​
+### ターゲットユーザ
+- 同じ趣味を持つ人
+- この趣味に興味があって始めようと思っている人
+​
+### 主な利用シーン
+- カスタマイズの参考を探している時
+- ツーリングの募集やライドする時の計画の参考などに
+​
+## 設計書
+後ほど作成予定
+​
+## 開発環境
+- OS：Windows
+- 言語：HTML,CSS,JavaScript,Ruby,SQL
+- フレームワーク：Ruby on Rails
+- JSライブラリ：jQuery
+- IDE：Visual Studio Code（VSCode）
