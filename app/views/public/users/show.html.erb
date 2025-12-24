@@ -1,0 +1,52 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-4">
+      <h2>マイページ</h2>
+      <div class="card shadow-sm p-4 text-center mt-3">
+        <div class="mb-3">
+          <% if @user.profile_image.attached? %>
+            <%= image_tag @user.get_profile_image(150, 150), class: "rounded-circle shadow-sm" %>
+          <% else %>
+            <div class="bg-light d-flex align-items-center justify-content-center rounded-circle mx-auto shadow-sm" style="width: 150px; height: 150px;">
+              <i class="fas fa-user fa-5x text-secondary"></i>
+            </div>
+          <% end %>
+        </div>
+        <h4 class="font-weight-bold"><%= @user.name %></h4>
+        <p class="text-muted"><%= @user.email %></p>
+
+        <% if @user == current_user %>
+          <%= link_to "プロフィールを編集", edit_user_path(@user), class: "btn btn-outline-secondary btn-sm mt-3" %>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <h3 class="mb-4">自分の投稿一覧</h3>
+      <table class="table table-hover shadow-sm bg-white">
+        <thead class="table-light">
+          <tr>
+            <th>画像</th>
+            <th>タイトル</th>
+            <th>本文</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @posts.each do |post| %>
+            <tr>
+              <td style="width: 100px;">
+                <% if post.image.attached? %>
+                  <%= image_tag post.image.variant(resize_to_limit: [100, 100]).processed, class: "img-thumbnail" %>
+                <% else %>
+                  <div class="bg-light text-center py-3 text-muted" style="font-size: 0.8rem;">No Image</div>
+                <% end %>
+              </td>
+              <td><%= link_to post.title, post_path(post), class: "font-weight-bold" %></td>
+              <td><%= truncate(post.body, length: 50) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
