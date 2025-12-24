@@ -1,0 +1,31 @@
+<div class="about-wrapper" style="
+  background-image: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url('<%= asset_path('cyclist_top2.png') %>');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+">
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 mx-auto">
+        
+        <div class="p-5 shadow-lg" style="background-color: rgba(255, 255, 255, 0.9);">
+          <h1 class="text-center mb-4 font-weight-bold" style="color: #333;">BikeAppとは</h1>
+          <p class="lead" style="line-height: 2; color: #444;">
+            BikeAppは、自転車を愛するすべての人のためのコミュニティサイトです。<br>
+            お気に入りのコースを地図上に投稿したり、同じジャンルの仲間とグループを作って交流することができます。
+          </p>
+          
+          <div class="text-center mt-5">
+            <%= link_to "さぁ、始めましょう！", new_user_registration_path, class: "btn btn-primary btn-lg px-5 shadow" %>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
