@@ -13,23 +13,27 @@
 
   <body>
     <header>
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <nav class="navbar navbar-expand-lg navbar-dark shadow-sm" style="background-color: <%= admin_signed_in? ? '#FF8C00' : '#212529' %>;">
         <div class="container">
-        <%= link_to root_path, class: "navbar-brand" do %>
-          <%= image_tag 'BikeApp_logo.png', size: '80x80', class: "d-inline-block align-top" %>
-        <% end %>
+          <%= link_to (admin_signed_in? ? admin_path : root_path), class: "navbar-brand" do %>
+            <%= image_tag 'BikeApp_logo.png', size: '80x80', class: "d-inline-block align-top" %>
+          <% end %>
           
-          <div class="collapse navbar-collapse">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
               <% if admin_signed_in? %>
-                <li class="nav-item"><%= link_to "ジャンル一覧", admin_genres_path, class: "nav-link" %></li>
-                <li class="nav-item"><%= link_to "ログアウト", destroy_admin_session_path, data: { turbo_method: :delete }, class: "nav-link" %></li>
+                <li class="nav-item"><%= link_to "ユーザー一覧", admin_users_path, class: "nav-link" %></li>
+                <li class="nav-item"><%= link_to "ログアウト", destroy_admin_session_path, method: :get, class: "nav-link" %></li>
               
               <% elsif user_signed_in? %>
                 <li class="nav-item"><%= link_to "マイページ", mypage_path, class: "nav-link" %></li>
                 <li class="nav-item"><%= link_to "投稿一覧", posts_path, class: "nav-link" %></li>
                 <li class="nav-item"><%= link_to "About", about_path, class: "nav-link" %></li>
-                <li class="nav-item"><%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete }, class: "nav-link" %></li>
+                <li class="nav-item"><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "nav-link" %></li>
                 
               <% else %>
                 <li class="nav-item"><%= link_to "About", about_path, class: "nav-link" %></li>
@@ -43,15 +47,18 @@
       </nav>
     </header>
 
-    <div class="container text-center mt-3">
+    <div class="container mt-3">
       <% if flash[:notice] %>
-        <p class="alert alert-success"><%= flash[:notice] %></p>
+        <div class="alert alert-success text-center"><%= flash[:notice] %></div>
       <% end %>
       <% if flash[:alert] %>
-        <p class="alert alert-danger"><%= flash[:alert] %></p>
+        <div class="alert alert-danger text-center"><%= flash[:alert] %></div>
       <% end %>
     </div>
 
-    <%= yield %>
+    <main>
+      <%= yield %>
+    </main>
+
   </body>
 </html>

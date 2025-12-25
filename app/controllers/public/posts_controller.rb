@@ -50,7 +50,7 @@ class Public::PostsController < ApplicationController
   def ensure_correct_user
     @post = Post.find(params[:id])
     unless @post.user == current_user
-      redirect_to posts_path, alert: "他人の投稿は操作できません。"
+      redirect_to posts_path, alert: "他人の投稿です。"
     end
   end
 end
