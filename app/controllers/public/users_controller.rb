@@ -1,12 +1,12 @@
 class Public::UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :is_matching_login_user, only: [:edit, :update]
-  before_action :ensure_guest_user, only: [:edit]
+  before_action :ensure_guest_user, only: [:edit, :update, :confirm_withdraw, :destroy]
 
   def ensure_guest_user
     @user = User.find(params[:id])
     if @user.email == "guest@example.com"
-      redirect_to mypage_path, alert: 'ゲストユーザーはプロフィール編集画面へ遷移できません。'
+      redirect_to mypage_path, alert: 'ゲストログインでは実行できません。'
     end
   end
 
@@ -28,10 +28,28 @@ class Public::UsersController < ApplicationController
     end
   end
 
+  def confirm_withdraw
+    @user = User.find(params[:id])
+  end
+
+  def destroy
+    @user = User.find(params[:id])
+    @user.destroy
+    reset_session
+    redirect_to new_user_registration_path, notice: "退会処理が完了しました。"
+  end
+
   private
 
   def user_params
     params.require(:user).permit(:name, :profile_image)
+  end
+
+  def ensure_guest_user
+    @user = User.find(params[:id])
+    if @user.email == "guest@example.com"
+      redirect_to mypage_path, alert: "ゲストログインでは実行できません。"
+    end
   end
 
   def is_matching_login_user

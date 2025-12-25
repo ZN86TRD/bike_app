@@ -6,9 +6,10 @@
       <div class="card shadow-sm p-4">
         <%= form_with model: @user, url: user_path(@user), method: :patch, local: true do |f| %>
           
-          <div class="form-group mb-3">
-            <%= f.label :profile_image, "プロフィール画像" %>
-            <%= f.file_field :profile_image, accept: "image/*", class: "form-control-file d-block" %>
+          <div class="form-group mb-3 text-center">
+            <%= f.label :profile_image, "プロフィール画像" %><br>
+            <%= image_tag @user.get_profile_image(100, 100), class: "rounded-circle mb-2 shadow-sm" %>
+            <%= f.file_field :profile_image, accept: "image/*", class: "form-control-file d-block mx-auto" %>
           </div>
 
           <div class="form-group mb-3">
@@ -16,14 +17,20 @@
             <%= f.text_field :name, class: "form-control" %>
           </div>
 
+          <div class="form-group mb-3">
+            <%= f.label :email, "メールアドレス" %>
+            <%= f.email_field :email, class: "form-control" %>
+          </div>
+
           <div class="text-center mt-4">
             <%= f.submit "変更を保存", class: "btn btn-primary px-5" %>
+            <%= link_to "退会する", confirm_withdraw_user_path(@user), class: "btn btn-outline-danger ml-3" %>
           </div>
         <% end %>
       </div>
 
-      <div class="text-center mt-3">
-        <%= link_to "マイページへ戻る", mypage_path %>
+      <div class="text-center mt-4 mb-5">
+        <%= link_to "マイページへ戻る", mypage_path, class: "text-secondary" %>
       </div>
     </div>
   </div>
