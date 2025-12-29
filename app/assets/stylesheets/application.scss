@@ -13,3 +13,7 @@
  *= require_tree .
  *= require_self
  */
+
+ .multiple-images {
+    background-image: image-url("BikeApp_about2.png"), image-url("BikeApp_logo.png"),image-url("no_image.jpg");
+  }
