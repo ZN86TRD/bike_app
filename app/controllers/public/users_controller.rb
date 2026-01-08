@@ -3,16 +3,17 @@ class Public::UsersController < ApplicationController
   before_action :is_matching_login_user, only: [:edit, :update]
   before_action :ensure_guest_user, only: [:edit, :update, :confirm_withdraw, :destroy]
 
-  def ensure_guest_user
-    @user = User.find(params[:id])
-    if @user.email == "guest@example.com"
-      redirect_to mypage_path, alert: 'ゲストログインでは実行できません。'
-    end
+  def index
+    @users = User.page(params[:page]).per(10)
   end
 
   def show
-    @user = current_user
-    @posts = @user.posts
+    if params[:id]
+      @user = User.find(params[:id])
+    else
+      @user = current_user
+    end
+    @posts = @user.posts.page(params[:page])
   end
 
   def edit

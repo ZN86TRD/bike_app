@@ -35,7 +35,7 @@ Rails.application.routes.draw do
     get 'users/mypage' => 'users#show', as: 'mypage'
    
     # ユーザー
-    resources :users, only: [:edit, :update, :destroy] do
+    resources :users, only: [:index, :show, :edit, :update, :destroy] do
       member do
         #退会確認_名前パス
         get 'confirm_withdraw'
