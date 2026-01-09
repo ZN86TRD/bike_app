@@ -29,6 +29,8 @@
                   <td class="align-middle text-center">
                     <% if user.email == 'guest@example.com' %>
                       <span class="badge rounded-pill bg-info text-dark">ゲスト</span>
+                    <% elsif user.is_active == false %>
+                      <span class="badge rounded-pill bg-danger">退会済み</span>
                     <% else %>
                       <span class="badge rounded-pill bg-success">有効</span>
                     <% end %>

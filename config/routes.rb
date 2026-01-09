@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
 
-  namespace :public do
-    get 'searches/index'
-  end
   # 管理者
   devise_for :admin, skip: [:registrations, :passwords], controllers: {
     sessions: "admin/sessions"
@@ -19,7 +16,10 @@ Rails.application.routes.draw do
   namespace :admin do
     get '/' => 'dashboards#index'
     resources :genres, only: [:index, :create, :edit, :update, :destroy]
-    resources :users, only: [:index, :show, :edit, :update]
+    resources :users, only: [:index, :show, :update]
+    resources :posts, only: [:show, :destroy] do
+      resources :post_comments, only: [:destroy]
+    end
   end
 
   # ユーザー側
