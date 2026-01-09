@@ -11,7 +11,7 @@
                 <th>ID</th>
                 <th>氏名</th>
                 <th>メールアドレス</th>
-                <th class="text-center">ステータス</th> <%# ステータス列 %>
+                <th class="text-center">ステータス</th> 
                 <th class="text-center">アクション</th>
               </tr>
             </thead>
@@ -27,7 +27,6 @@
                   <td class="align-middle"><%= user.email %></td>
                   
                   <td class="align-middle text-center">
-                    <%# 物理削除のみの場合は全員「有効」となります %>
                     <% if user.email == 'guest@example.com' %>
                       <span class="badge rounded-pill bg-info text-dark">ゲスト</span>
                     <% else %>

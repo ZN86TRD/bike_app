@@ -7,6 +7,7 @@ class User < ApplicationRecord
   validates :name, presence: true
   has_one_attached :profile_image
   has_many :posts, dependent: :destroy
+  has_many :post_comments, dependent: :destroy
 
   def get_profile_image(width, height)
     unless profile_image.attached?
@@ -14,6 +15,10 @@ class User < ApplicationRecord
       profile_image.attach(io: File.open(file_path), filename: 'default-image.jpg', content_type: 'image/jpeg')
     end
     profile_image.variant(resize_to_limit: [width, height]).processed
+  end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["name"] # 検索を許可したカラム名
   end
 
   def self.guest

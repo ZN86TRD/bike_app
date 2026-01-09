@@ -45,7 +45,11 @@
                   <div class="bg-light text-center py-3 text-muted" style="font-size: 0.8rem;">No Image</div>
                 <% end %>
               </td>
-              <td><%= link_to post.title, post_path(post), class: "font-weight-bold" %></td>
+              <td><%= link_to post.title, post_path(post), class: "font-weight-bold" %>
+                <span class="small ml-1 text-muted font-weight-normal">
+                  <i class="far fa-comment"></i> <%= post.post_comments.count %>
+                </span>
+              </td>
               <td><%= truncate(post.body, length: 50) %></td>
             </tr>
           <% end %>

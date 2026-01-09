@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  namespace :public do
+    get 'searches/index'
+  end
   # 管理者
   devise_for :admin, skip: [:registrations, :passwords], controllers: {
     sessions: "admin/sessions"
@@ -29,7 +32,9 @@ Rails.application.routes.draw do
       post 'users/guest_sign_in', to: 'sessions#guest_sign_in'
     end
 
-    resources :posts
+    resources :posts do
+      resources :post_comments, only: [:create, :destroy]
+    end
 
     # マイページ名前パス
     get 'users/mypage' => 'users#show', as: 'mypage'
@@ -41,5 +46,7 @@ Rails.application.routes.draw do
         get 'confirm_withdraw'
       end
     end
+
+    get 'search' => 'searches#index', as: 'search'
   end
 end
