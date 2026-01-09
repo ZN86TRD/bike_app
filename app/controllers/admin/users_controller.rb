@@ -9,16 +9,15 @@ class Admin::UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
-  def edit
-    @user = User.find(params[:id])
-  end
-
   def update
     @user = User.find(params[:id])
-    if @user.update(user_params)
-      redirect_to admin_user_path(@user), notice: "ユーザー情報を更新しました。"
+    # 強制的に is_active を false (退会状態) に更新する
+    if @user.update(is_active: false)
+      flash[:notice] = "ユーザーを退会処理しました。"
+      redirect_to admin_user_path(@user)
     else
-      render :edit
+      flash[:alert] = "退会処理に失敗しました。"
+      render :show
     end
   end
 
