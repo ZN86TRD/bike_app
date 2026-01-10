@@ -17,6 +17,7 @@
         <% if @user == current_user %>
           <% if @user.email != 'guest@example.com' %>
             <%= link_to "プロフィールを編集", edit_user_path(@user), class: "btn btn-outline-secondary btn-sm mt-3" %>
+            <%= link_to "いいね", public_favorites_index_path(@user), class: "btn btn-outline-secondary btn-sm mt-3" %>
           <% else %>
             <p class="text-muted small mt-3">※ゲストログイン中</p>
           <% end %>
