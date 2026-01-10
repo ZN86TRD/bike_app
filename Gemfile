@@ -68,3 +68,5 @@ gem "net-pop"
 gem "net-imap"
 
 gem 'ransack'
+
+gem 'active_storage_validations'
