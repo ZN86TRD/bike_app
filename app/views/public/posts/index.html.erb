@@ -44,9 +44,12 @@
               </td>
               <td class="fw-bold">
                 <%= link_to post.title, post_path(post) %>
-                <span class="small ml-1 text-muted font-weight-normal">
-                  <i class="far fa-comment"></i> <%= post.post_comments.count %>
-                </span>
+                <div class="d-flex">
+                    <%= render "public/favorites/btn", post: post %>
+                  <span class="small  mt-1 ml-2 text-muted font-weight-normal">
+                    <i class="far fa-comment"></i> <%= post.post_comments.count %>
+                  </span>
+                </div>
               </td>
               <td><%= truncate(post.body, length: 30) %></td>
               <td>

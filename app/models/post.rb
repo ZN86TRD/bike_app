@@ -2,6 +2,7 @@ class Post < ApplicationRecord
 
     belongs_to :user
     has_many :post_comments, dependent: :destroy
+    has_many :favorites, dependent: :destroy
     has_one_attached :image
     validates :title, presence: true
     validates :body, presence: true
@@ -18,11 +19,15 @@ class Post < ApplicationRecord
         image
     end
 
+    def favorited_by?(user)
+      favorites.exists?(user_id: user.id)
+    end
+
     def self.ransackable_attributes(auth_object = nil)
       ["title", "body"] # 検索対象カラムの指定
     end
   
     def self.ransackable_associations(auth_object = nil)
-      ["user"] # 投稿者の名前で検索する場合のやつ
+      ["user"] # 投稿者の名前で検索する場合
     end
 end

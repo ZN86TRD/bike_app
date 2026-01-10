@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  namespace :public do
+    get 'favorites/index'
+  end
   # 管理者
   devise_for :admin, skip: [:registrations, :passwords], controllers: {
     sessions: "admin/sessions"
@@ -32,9 +35,14 @@ Rails.application.routes.draw do
       post 'users/guest_sign_in', to: 'sessions#guest_sign_in'
     end
 
+    #投稿
     resources :posts do
       resources :post_comments, only: [:create, :destroy]
+      resource :favorites, only: [:create, :destroy]
     end
+
+    #自身のいいね一覧
+    get 'favorites' => 'public/favorites#index'
 
     # マイページ名前パス
     get 'users/mypage' => 'users#show', as: 'mypage'
@@ -47,6 +55,7 @@ Rails.application.routes.draw do
       end
     end
 
+    #検索(ransack仕様)
     get 'search' => 'searches#index', as: 'search'
   end
 end
