@@ -1,1 +1,52 @@
-<h1 class="text-center mt-5">ようこそ！BikeAppへ！</h1>
+<div class="container mt-5">
+  <% if user_signed_in? %>
+    <div class="row">
+      <div class="col-md-8 mx-auto">
+        <h2 class="mb-4">タイムライン</h2>
+        
+        <% if @posts.exists? %>
+          <% @posts.each do |post| %>
+            <div class="card mb-3 shadow-sm">
+              <div class="card-body">
+                <div class="d-flex align-items-center mb-2">
+                  <strong class="mr-2"><%= link_to post.user.name, user_path(post.user), class: "text-dark" %></strong>
+                  <small class="text-muted"><%= post.created_at.strftime('%Y/%m/%d') %></small>
+                </div>
+
+                <h5 class="card-title"><%= link_to post.title, post_path(post) %></h5>
+                
+                <% if post.image.attached? %>
+                  <%= image_tag post.image.variant(resize_to_limit: [500, 500]).processed, class: "img-fluid rounded mb-2" %>
+                <% end %>
+
+                <p class="card-text"><%= truncate(post.body, length: 100) %></p>
+
+                <div class="d-flex align-items-center">
+                  <%= render "public/favorites/btn", post: post %>
+                  <span class="small ml-3 mb-2 text-muted">
+                    <i class="far fa-comment"></i> <%= post.post_comments.count %>
+                  </span>
+                </div>
+              </div>
+            </div>
+          <% end %>
+          <div class="text-center mt-4">
+            <%= link_to "すべての投稿を見る", posts_path, class: "btn btn-outline-primary" %>
+          </div>
+        <% else %>
+          <div class="text-center py-5 shadow-sm bg-light rounded">
+            <p class="text-muted">フォローしている人の投稿がここに表示されます。</p>
+            <%= link_to "ユーザーをフォローしてみましょう!", users_path, class: "btn btn-primary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  <% else %>
+    <div class="jumbotron text-center bg-white shadow-sm">
+      <h1 class="display-4">Welcome to Bike_app!</h1>
+      <p class="lead">サイクリストのためのコミュニティサイト</p>
+      <hr class="my-4">
+    </div>
+  <% end %>
+</div>
