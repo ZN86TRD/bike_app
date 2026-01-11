@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
 
-  namespace :public do
-    get 'favorites/index'
-  end
   # 管理者
   devise_for :admin, skip: [:registrations, :passwords], controllers: {
     sessions: "admin/sessions"
@@ -42,13 +39,17 @@ Rails.application.routes.draw do
     end
 
     #自身のいいね一覧
-    get 'favorites' => 'public/favorites#index'
+    get 'favorites' => 'favorites#index'
 
     # マイページ名前パス
     get 'users/mypage' => 'users#show', as: 'mypage'
    
     # ユーザー
     resources :users, only: [:index, :show, :edit, :update, :destroy] do
+      resource :relationships, only: [:create, :destroy]
+      get 'followings' => 'relationships#followings', as: 'followings'
+      get 'followers' => 'relationships#followers', as: 'followers'
+
       member do
         #退会確認_名前パス
         get 'confirm_withdraw'
