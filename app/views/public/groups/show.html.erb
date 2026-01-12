@@ -1,7 +1,7 @@
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-8 mx-auto">
-      <%# --- グループ基本情報 --- %>
+      <% #--- グループ基本情報 ---%>
       <div class="d-flex align-items-center mb-3">
         <span class="badge badge-primary mr-2"><%= @group.genre.name %></span>
         <h2 class="mb-0"><%= @group.name %></h2>
@@ -12,13 +12,13 @@
       </div>
 
         <hr>
-        <h4 class="mb-3">参加メンバー一覧</h4>
+        <h4 class="mb-3">参加しているメンバー</h4>
         <div class="row">
-            <%# statusが1（approved）のユーザーだけを表示 %>
+            <% #statusが1のユーザーだけを表示 %>
             <% if @group.group_users.approved.exists? %>
                 <% @group.group_users.approved.each do |gu| %>
                 <div class="col-md-3 text-center mb-3">
-                    <%# ユーザーのプロフィール画像がある場合は表示（例: attachment_image_tag など） %>
+                    <% #ユーザーのプロフィール画像がある場合は表示 %>
                     <p class="mb-1"><%= gu.user.name %> さん</p>
                     <% if gu.user == @group.owner %>
                     <span class="badge badge-warning">オーナー</span>
@@ -30,37 +30,43 @@
             <% end %>
         </div>
 
-      <%# --- アクションボタン（申請・編集など） --- %>
+      <% #--- 申請・編集 ---%>
       <div class="mb-5">
         <% if @group.owner_id == current_user.id %>
           <%# 自分がオーナーの場合 %>
           <%= link_to 'グループ情報を編集', edit_group_path(@group), class: "btn btn-outline-info" %>
         <% else %>
-          <%# オーナー以外の場合：現在の参加ステータスを確認 %>
+          <% #オーナー以外の場合：現在の参加ステータスを確認 %>
           <% group_user = current_user.group_users.find_by(group_id: @group.id) %>
 
           <% if group_user.nil? %>
-            <%# まだ申請すらしていない %>
-            <%= link_to 'このグループに参加申請する', group_group_users_path(@group), method: :post, class: "btn btn-primary" %>
+            <% #まだ申請すらしていない %>
+            <% if current_user.guest_user? %>
+              <% #ゲストユーザーの場合はリンク非表示 %>
+              <p class="text-muted small"><i class="fas fa-info-circle"></i> ゲストユーザーはグループへの参加申請ができません。</p>
+            <% else %>
+              <% #ゲストユーザーでなければ申請リンクを表示 %>
+              <%= link_to 'このグループに参加申請する', group_group_users_path(@group), method: :post, class: "btn btn-primary" %>
+            <% end %>
           <% elsif group_user.pending? %>
-            <%# 申請中（pending） %>
+            <% #申請中の場合 %>
             <button class="btn btn-secondary" disabled>現在、参加承認待ちです</button>
           <% elsif group_user.approved? %>
-            <%# 承認済み（approved） %>
+            <% #承認済みの場合 %>
             <div class="alert alert-success d-inline-block p-2 mb-0">あなたはメンバーです</div>
             <%= link_to '退会する', group_group_user_path(@group, group_user), method: :delete, data: { confirm: "本当に退会しますか？" }, class: "btn btn-sm btn-outline-danger ml-3" %>
           <% end %>
         <% end %>
       </div>
 
-      <%# --- オーナー専用-承認待ちリスト --- %>
+      <% #オーナー専用-承認待ちリスト %>
       <% if @group.owner_id == current_user.id %>
         <div class="card border-warning">
           <div class="card-header bg-warning text-dark font-weight-bold">
             申請中のユーザー
           </div>
           <ul class="list-group list-group-flush">
-            <%# statusが0（pending）のデータだけを表示 %>
+            <% #statusが0のデータだけを表示 %>
             <% if @group.group_users.pending.exists? %>
               <% @group.group_users.pending.each do |gu| %>
                 <li class="list-group-item d-flex justify-content-between align-items-center">

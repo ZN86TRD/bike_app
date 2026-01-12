@@ -11,16 +11,17 @@
 
         <div class="form-group mb-3">
           <%= f.label :name, "グループ名" %>
-          <%= f.text_field :name, class: "form-control" %>
+          <%= f.text_field :name, class: "form-control", placeholder: "グループ名を入力" %>
         </div>
 
         <div class="form-group mb-4">
           <%= f.label :description, "グループ紹介文" %>
-          <%= f.text_area :description, class: "form-control", rows: 5 %>
+          <%= f.text_area :description, class: "form-control", rows: 5, placeholder: "グループ説明文を入力" %>
         </div>
 
         <div class="text-center d-flex justify-content-around">
           <%= link_to '戻る', group_path(@group), class: "btn btn-outline-secondary px-4" %>
+          <%= link_to 'グループを削除', group_path(@group), method: :delete, data: { confirm: "グループを削除すると元に戻せません。本当に削除しますか？" }, class: "btn btn-danger ml-1 mr-2" %>
           <%= f.submit "変更を保存する", class: "btn btn-primary px-4" %>
         </div>
       <% end %>

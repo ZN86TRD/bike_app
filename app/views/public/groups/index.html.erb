@@ -3,7 +3,10 @@
     <div class="col-md-10 mx-auto">
       <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>グループ一覧</h2>
-        <%= link_to '新規グループ作成', new_group_path, class: "btn btn-success" %>
+        <% #ゲストユーザーではない場合のみ、作成ボタンを表示 %>
+          <% unless current_user.guest_user? %>
+            <%= link_to '新規グループ作成', new_group_path, class: "btn btn-success" %>
+          <% end %>
       </div>
 
       <table class="table table-hover shadow-sm bg-white">
@@ -43,7 +46,7 @@
                 <%= group.description %>
               </td>
               <td>
-                <%# 承認済み(status: 1)のメンバー数のみカウント %>
+                <% #承認済みのメンバーのみカウント %>
                 <i class="fas fa-users mr-1"></i>
                 <%= group.group_users.approved.count %> 名
               </td>
