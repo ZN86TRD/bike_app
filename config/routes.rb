@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     get '/' => 'dashboards#index'
     resources :genres, only: [:index, :create, :edit, :update, :destroy]
     resources :users, only: [:index, :show, :update]
+    resources :groups, only: [:index, :destroy]
     resources :posts, only: [:show, :destroy] do
       resources :post_comments, only: [:destroy]
     end
@@ -58,5 +59,10 @@ Rails.application.routes.draw do
 
     #検索(ransack仕様)
     get 'search' => 'searches#index', as: 'search'
+
+    #グループ
+    resources :groups do
+      resources :group_users, only: [:create, :edit, :update, :destroy]
+    end
   end
 end
