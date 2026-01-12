@@ -24,6 +24,11 @@
               <strong><%= @user.followers.count %></strong> フォロワー
             <% end %>
           </div>
+          <div class="mx-2 border-left pl-3">
+            <%= link_to favorites_path(@user), class: "text-dark" do %>
+              <i class="fas fa-heart text-danger"></i>いいね
+            <% end %>
+          </div>
         </div>
         <div class="mt-4 text-left">
           <p class="small text-muted mb-1 font-weight-bold">自己紹介</p>
@@ -37,8 +42,11 @@
         </div>
         <% if @user == current_user %>
             <% if @user.email != 'guest@example.com' %>
-              <%= link_to "プロフィールを編集", edit_user_path(@user), class: "btn btn-outline-secondary btn-sm mt-3" %>
-              <%= link_to "いいね", favorites_path(@user), class: "btn btn-outline-secondary btn-sm mt-3" %>
+            <div class="mt-3">
+              <%= link_to edit_user_path(@user), class: "btn btn-outline-secondary btn-sm btn-block shadow-sm" do %>
+                <i class="fas fa-user-edit mr-1"></i> プロフィールを編集
+              <% end %>
+            </div>
             <% else %>
               <p class="text-muted small mt-3">※ゲストログイン中</p>
             <% end %>

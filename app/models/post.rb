@@ -36,7 +36,6 @@ class Post < ApplicationRecord
     #タイムライン機能
     def self.feed(user)
       following_ids = user.followings.pluck(:id)
-      following_ids << user.id
       where(user_id: following_ids).order(created_at: :desc)
     end
 end
