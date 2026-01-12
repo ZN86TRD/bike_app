@@ -46,7 +46,10 @@
     <div class="jumbotron text-center bg-white shadow-sm">
       <h1 class="display-4">Welcome to Bike_app!</h1>
       <p class="lead">サイクリストのためのコミュニティサイト</p>
-      <hr class="my-4">
     </div>
+    
   <% end %>
+  <div class="d-flex justify-content-center mt-4">
+    <%= paginate @posts %>
+  </div>
 </div>
