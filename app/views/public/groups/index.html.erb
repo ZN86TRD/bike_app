@@ -1,0 +1,67 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-10 mx-auto">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>グループ一覧</h2>
+        <%= link_to '新規グループ作成', new_group_path, class: "btn btn-success" %>
+      </div>
+
+      <table class="table table-hover shadow-sm bg-white">
+        <thead class="thead-light">
+          <tr>
+            <th>ジャンル</th>
+            <th>グループ名</th>
+            <th>紹介</th>
+            <th>メンバー数</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @groups.each do |group| %>
+            <tr>
+              <td>
+                <span class="badge badge-info p-2">
+                  <%= group.genre.name %>
+                </span>
+              </td>
+              <td class="font-weight-bold">
+                <%= group.name %>
+                <span class="ml-2">
+                    <% if group.owner_id == current_user.id %>
+                    <span class="badge badge-warning">オーナー</span>
+                    <% else %>
+                    <% group_user = group.group_users.find_by(user_id: current_user.id) %>
+                    <% if group_user&.approved? %>
+                        <span class="badge badge-success">参加中</span>
+                    <% elsif group_user&.pending? %>
+                        <span class="badge badge-secondary">承認待ち</span>
+                    <% end %>
+                    <% end %>
+                </span>
+              </td>
+              <td class="text-truncate" style="max-width: 250px;">
+                <%= group.description %>
+              </td>
+              <td>
+                <%# 承認済み(status: 1)のメンバー数のみカウント %>
+                <i class="fas fa-users mr-1"></i>
+                <%= group.group_users.approved.count %> 名
+              </td>
+              <td>
+                <%= link_to '詳細を見る', group_path(group), class: "btn btn-outline-primary btn-sm" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+        <div class="d-flex justify-content-center mt-4">
+        <%= paginate @groups %>
+        </div>
+
+      <% if @groups.empty? %>
+        <p class="text-center mt-5 text-muted">現在、作成されたグループはありません。</p>
+      <% end %>
+    </div>
+  </div>
+</div>

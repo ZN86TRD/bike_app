@@ -27,11 +27,13 @@
             <ul class="navbar-nav ml-auto">
               <% if admin_signed_in? %>
                 <li class="nav-item"><%= link_to "ダッシュボード", admin_path,  class: "nav-link" %></li>
+                <li class="nav-item"><%= link_to 'グループ一覧', admin_groups_path, class: 'nav-link' %></li>
                 <li class="nav-item"><%= link_to "ユーザー一覧", admin_users_path, class: "nav-link" %></li>
                 <li class="nav-item"><%= link_to "ログアウト", destroy_admin_session_path, method: :get, class: "nav-link" %></li>
               
               <% elsif user_signed_in? %>
                 <li class="nav-item"><%= link_to "マイページ", mypage_path, class: "nav-link" %></li>
+                <li class="nav-item"><%= link_to 'グループ', groups_path, class: 'nav-link' %></li>
                 <li class="nav-item"><%= link_to "ユーザー一覧", users_path, class: "nav-link" %>
                 <li class="nav-item"><%= link_to "投稿一覧", posts_path, class: "nav-link" %></li>
                 <li class="nav-item"><%= link_to "About", about_path, class: "nav-link" %></li>
