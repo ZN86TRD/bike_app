@@ -4,7 +4,7 @@ class Public::PostsController < ApplicationController
 
   def index
     @post = Post.new
-    @posts = Post.all
+    @posts = Post.all.order(created_at: :desc).page(params[:page]).per(10)
   end
 
   def create
