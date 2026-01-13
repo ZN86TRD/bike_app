@@ -4,7 +4,7 @@ class Public::UsersController < ApplicationController
   before_action :ensure_guest_user, only: [:edit, :update, :confirm_withdraw, :destroy]
 
   def index
-    @users = User.page(params[:page]).per(10)
+    @users = User.all.page(params[:page]).per(10)
   end
 
   def show
