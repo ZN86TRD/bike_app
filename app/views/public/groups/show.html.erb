@@ -10,6 +10,9 @@
       <div class="p-4 bg-light rounded border mb-4">
         <%= simple_format(@group.description) %>
       </div>
+      <% if @group.owner_id == current_user.id %>
+        <%= link_to "メールを作成する", new_group_event_notices_path(@group), class: "btn btn-info btn-sm shadow-sm" %>
+      <% end %>
 
         <hr>
         <h4 class="mb-3">参加しているメンバー</h4>
