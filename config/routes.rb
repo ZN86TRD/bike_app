@@ -63,6 +63,8 @@ Rails.application.routes.draw do
     #グループ
     resources :groups do
       resources :group_users, only: [:create, :edit, :update, :destroy]
+      resource :event_notices, only: [:new, :create]
+      get "event_notices/sent" => "event_notices#sent", as: "sent"
     end
   end
 end
