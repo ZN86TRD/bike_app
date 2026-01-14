@@ -1,0 +1,24 @@
+<% group.group_posts.each do |post| %>
+    <div class="d-flex align-items-start mb-3">
+      <div class="mr-2">
+        <%= image_tag post.user.get_profile_image(40,40), class: "rounded-circle shadow-sm" %>
+      </div>
+  
+      <div class="w-100">
+        <div class="d-flex align-items-center">
+          <strong class="small mr-2"><%= post.user.name %></strong>
+          <small class="text-muted"><%= post.created_at.strftime('%H:%M') %></small>
+        </div>
+
+        <div class="mt-1 <%= 'text-success font-weight-bold' if post.user == current_user %>">
+          <%= post.body %>
+  
+          <% if post.user == current_user %>
+            <%= link_to group_group_post_path(group, post), method: :delete, remote: true, class: "text-danger ml-2", data: { confirm: "削除しますか？" } do %>
+              <small>&times;</small>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
