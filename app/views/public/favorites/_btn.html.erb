@@ -1,13 +1,15 @@
-<% if post.favorited_by?(current_user) %>
-  <p>
-    <%= link_to post_favorites_path(post), method: :delete, class: "text-danger" do %>
-      ♥ <%= post.favorites.count %>
-    <% end %>
-  </p>
-<% else %>
-  <p>
-    <%= link_to post_favorites_path(post), method: :post, class: "text-dark" do %>
-      ♡ <%= post.favorites.count %>
-    <% end %>
-  </p>
-<% end %>
+<div id="favorite_btn_<%= post.id %>">
+  <% if post.favorited_by?(current_user) %>
+    <p>
+      <%= link_to post_favorites_path(post), method: :delete, remote: true, class: "text-danger" do %>
+        ♥ <%= post.favorites.count %>
+      <% end %>
+    </p>
+  <% else %>
+    <p>
+      <%= link_to post_favorites_path(post), method: :post, remote: true, class: "text-dark" do %>
+        ♡ <%= post.favorites.count %>
+      <% end %>
+    </p>
+  <% end %>
+</div>
