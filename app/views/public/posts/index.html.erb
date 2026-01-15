@@ -17,6 +17,10 @@
           <%= f.label :body, "本文" %>
           <%= f.text_area :body, class: "form-control", rows: 5 %>
         </div>
+        <div class="form-group">
+          <%= f.label :address, "スポットの場所・住所を入力" %>
+          <%= f.text_field :address, class: "form-control", placeholder: "場所を入力してください" %>
+        </div>
         <%= f.submit "新規投稿", class: "btn btn-success w-100" %>
       <% end %>
     </div>

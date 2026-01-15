@@ -4,12 +4,18 @@ class Post < ApplicationRecord
     has_many :post_comments, dependent: :destroy
     has_many :favorites, dependent: :destroy
     has_one_attached :image
+
+    #バリデーション
     validates :title, presence: true
     validates :body, presence: true
     validates :image, 
       content_type: { in: %w(image/jpeg), message: "はJPG形式でアップロードしてください" },
       size: { less_than: 5.megabytes , message: "は5MB以下にしてください" }
 
+    #addressカラム基準で緯度・経度計算後、特定する
+    geocoded_by :address
+    #住所変更後、自動計算
+    after_validation :geocode, if: :address_changed?
 
     def get_image
         unless image.attached?

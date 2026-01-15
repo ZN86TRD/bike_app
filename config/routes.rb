@@ -60,6 +60,9 @@ Rails.application.routes.draw do
     #検索(ransack仕様)
     get 'search' => 'searches#index', as: 'search'
 
+    #マップ
+    get '/map' => 'posts#map', as: 'map'
+
     #グループ
     resources :groups do
       resources :group_users, only: [:create, :edit, :update, :destroy]

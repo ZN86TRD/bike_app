@@ -1,0 +1,38 @@
+<div class="container mt-5">
+  <h2 class="text-center mb-4"><i class="fas fa-bicycle text-primary"></i> みんなのサイクリングマップ</h2>
+  
+  <% #地図を表示するエリア %>
+  <div id="all-map" style="height: 600px; width: 100%;" class="rounded shadow border"></div>
+
+  <div class="mt-3 text-right text-muted small">
+    ※ピンをクリックすると投稿詳細へ移動します
+  </div>
+</div>
+
+<% #APIの読み込み %>
+<script async src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&callback=initMap"></script>
+
+<script>
+  function initMap() {
+    const center = { lat: 35.681236, lng: 139.767125 };
+    const map = new google.maps.Map(document.getElementById("all-map"), {
+      center: center,
+      zoom: 10,
+    });
+
+    <% @posts.each do |post| %>
+      (function() {
+        const markerPos = { lat: <%= post.latitude %>, lng: <%= post.longitude %> };
+        const marker = new google.maps.Marker({
+          position: markerPos,
+          map: map,
+          title: "<%= j post.address %>"
+        });
+
+        marker.addListener("click", () => {
+          window.location.href = "<%= post_path(post) %>";
+        });
+      })();
+    <% end %>
+  }
+</script>
