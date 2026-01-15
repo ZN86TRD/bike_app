@@ -70,3 +70,5 @@ gem "net-imap"
 gem 'ransack'
 
 gem 'active_storage_validations'
+
+gem 'geocoder'

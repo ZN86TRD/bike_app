@@ -42,10 +42,15 @@ class Public::PostsController < ApplicationController
     redirect_to posts_path, notice: "投稿を削除しました。"
   end
 
+  def map
+    # 緯度・経度が入力された投稿だけを取得
+    @posts = Post.where.not(latitude: nil).where.not(longitude: nil)
+  end
+
   private
 
   def post_params
-    params.require(:post).permit(:title, :body, :image)
+    params.require(:post).permit(:address, :title, :body, :image)
   end
 
   def ensure_correct_user
