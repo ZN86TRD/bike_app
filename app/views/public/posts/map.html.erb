@@ -20,6 +20,8 @@
       zoom: 10,
     });
 
+    const infoWindow = new google.maps.InfoWindow();
+
     <% @posts.each do |post| %>
       (function() {
         const markerPos = { lat: <%= post.latitude %>, lng: <%= post.longitude %> };
@@ -30,7 +32,19 @@
         });
 
         marker.addListener("click", () => {
-          window.location.href = "<%= post_path(post) %>";
+          const contentString = `
+            <div class="map-info-window" style="max-width: 200px;">
+              <% if post.image.attached? %>
+                <img src="<%= url_for(post.image.variant(resize_to_limit: [200, 200])) %>" style="width: 100%; height: auto; border-radius: 4px; margin-bottom: 8px;">
+              <% end %>
+              <h6 style="margin: 0 0 5px 0; font-weight: bold;"><%= j post.title %></h6>
+              <p style="font-size: 12px; color: #666; margin-bottom: 8px;"><%= j truncate(post.body, length: 30) %></p>
+              <a href="<%= post_path(post) %>" class="btn btn-primary btn-sm" style="color: #fff; text-decoration: none; display: block; text-align: center;">詳細を見る</a>
+            </div>
+          `;
+
+          infoWindow.setContent(contentString);
+          infoWindow.open(map, marker);
         });
       })();
     <% end %>
