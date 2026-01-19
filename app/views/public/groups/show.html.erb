@@ -1,114 +1,134 @@
 <div class="container mt-5">
-  <div class="row">
-    <div class="col-md-8 mx-auto">
-      <% #--- グループ基本情報 ---%>
-      <div class="d-flex align-items-center mb-3">
-        <span class="badge badge-primary mr-2"><%= @group.genre.name %></span>
-        <h2 class="mb-0"><%= @group.name %></h2>
+  <div class="row border-bottom pb-3 mb-4 align-items-end">
+    <div class="col-md-8">
+      <div class="d-flex align-items-center">
+        <span class="badge badge-pill badge-primary mr-2 px-3"><%= @group.genre.name %></span>
+        <h2 class="mb-0 font-weight-bold"><%= @group.name %></h2>
       </div>
-      <p class="text-muted small">作成者: <%= @group.owner.name %> さん</p>
-      <div class="p-4 bg-light rounded border mb-4">
-        <%= simple_format(@group.description) %>
-      </div>
+      <p class="text-muted small mt-2 mb-0">作成者: <%= @group.owner.name %> さん</p>
+    </div>
+    <div class="col-md-4 text-md-right mt-3 mt-md-0">
       <% if @group.owner_id == current_user.id %>
-        <%= link_to "メールを作成する", new_group_event_notices_path(@group), class: "btn btn-info btn-sm shadow-sm" %>
-      <% end %>
-
-        <hr>
-        <h4 class="mb-3">参加しているメンバー</h4>
-        <div class="row">
-            <% #statusが1のユーザーだけを表示 %>
-            <% if @group.group_users.approved.exists? %>
-                <% @group.group_users.approved.each do |gu| %>
-                <div class="col-md-3 text-center mb-3">
-                    <% #ユーザーのプロフィール画像がある場合は表示 %>
-                    <p class="mb-1"><%= gu.user.name %> さん</p>
-                    <% if gu.user == @group.owner %>
-                    <span class="badge badge-warning">オーナー</span>
-                    <% end %>
-                </div>
-                <% end %>
-            <% else %>
-                <p class="col-12 text-muted">現在メンバーはいません。</p>
-            <% end %>
-        </div>
-
-      <% #--- 申請・編集 ---%>
-      <div class="mb-5">
-        <% if @group.owner_id == current_user.id %>
-          <%# 自分がオーナーの場合 %>
-          <%= link_to 'グループ情報を編集', edit_group_path(@group), class: "btn btn-outline-info" %>
-        <% else %>
-          <% #オーナー以外の場合：現在の参加ステータスを確認 %>
-          <% group_user = current_user.group_users.find_by(group_id: @group.id) %>
-
-          <% if group_user.nil? %>
-            <% #まだ申請すらしていない %>
-            <% if current_user.guest_user? %>
-              <% #ゲストユーザーの場合はリンク非表示 %>
-              <p class="text-muted small"><i class="fas fa-info-circle"></i> ゲストユーザーはグループへの参加申請ができません。</p>
-            <% else %>
-              <% #ゲストユーザーでなければ申請リンクを表示 %>
-              <%= link_to 'このグループに参加申請する', group_group_users_path(@group), method: :post, class: "btn btn-primary" %>
-            <% end %>
-          <% elsif group_user.pending? %>
-            <% #申請中の場合 %>
-            <button class="btn btn-secondary" disabled>現在、参加承認待ちです</button>
-          <% elsif group_user.approved? %>
-            <% #承認済みの場合 %>
-            <div class="alert alert-success d-inline-block p-2 mb-0">あなたはメンバーです</div>
-            <%= link_to '退会する', group_group_user_path(@group, group_user), method: :delete, data: { confirm: "本当に退会しますか？" }, class: "btn btn-sm btn-outline-danger ml-3" %>
-          <% end %>
+        <%= link_to edit_group_path(@group), class: "btn btn-outline-secondary btn-sm" do %>
+          <i class="fas fa-cog"></i> グループ編集
         <% end %>
-      </div>
+        <%= link_to new_group_event_notices_path(@group), class: "btn btn-info btn-sm shadow-sm ml-1" do %>
+          <i class="fas fa-envelope"></i> メールを作成する
+        <% end %>
+      <% end %>
+    </div>
+  </div>
 
-      <% #オーナー専用-承認待ちリスト %>
-      <% if @group.owner_id == current_user.id %>
-        <div class="card border-warning">
-          <div class="card-header bg-warning text-dark font-weight-bold">
-            申請中のユーザー
-          </div>
-          <ul class="list-group list-group-flush">
-            <% #statusが0のデータだけを表示 %>
-            <% if @group.group_users.pending.exists? %>
-              <% @group.group_users.pending.each do |gu| %>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  <%= gu.user.name %> さん
-                  <div>
-                    <%= link_to '承認する', group_group_user_path(@group, gu), method: :patch, class: "btn btn-sm btn-success mr-1" %>
-                    <%= link_to '拒否', group_group_user_path(@group, gu), method: :delete, class: "btn btn-sm btn-outline-danger" %>
-                  </div>
-                </li>
+  <div class="row mb-4 d-flex align-items-stretch">
+    <% #グループ紹介 %>
+    <div class="col-md-8">
+      <div class="h-100 d-flex flex-column">
+        <h5 class="font-weight-bold">グループ紹介</h5>
+        <div class="p-4 bg-white rounded border shadow-sm flex-grow-1">
+          <%= simple_format(@group.description) %>
+        </div>
+      </div>
+    </div>
+
+    <% #ステータス・申請 %>
+    <div class="col-md-4 mt-4 mt-md-0">
+      <div class="h-100 d-flex flex-column">
+        <h5 class="font-weight-bold text-muted">現在のステータス</h5>
+        <div class="card shadow-sm border-0 flex-grow-1">
+          <div class="card-body d-flex flex-column justify-content-center">
+            <% if @group.owner_id != current_user.id %>
+              <% group_user = current_user.group_users.find_by(group_id: @group.id) %>
+              <% if group_user.nil? %>
+                <% unless current_user.guest_user? %>
+                  <p class="text-center text-muted small">このグループに参加して交流しましょう！</p>
+                  <%= link_to 'このグループに参加申請', group_group_users_path(@group), method: :post, class: "btn btn-primary btn-block shadow-sm" %>
+                <% end %>
+              <% elsif group_user.pending? %>
+                <div class="text-center">
+                  <i class="fas fa-hourglass-half fa-2x text-secondary mb-3"></i>
+                  <p class="mb-0">現在、承認待ちです</p>
+                </div>
+              <% elsif group_user.approved? %>
+                <div class="text-center">
+                  <div class="alert alert-success py-2 mb-3">参加中</div>
+                  <%= link_to 'グループを退会する', group_group_user_path(@group, group_user), method: :delete, data: { confirm: "本当に退会しますか？" }, class: "btn btn-sm btn-link text-danger" %>
+                </div>
               <% end %>
             <% else %>
-              <li class="list-group-item text-muted small">現在、新しい申請はありません。</li>
+              <div class="text-center">
+                <div class="alert alert-warning py-2 mb-0">あなたはオーナーです</div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% #掲示板とメンバーリスト %>
+  <div class="row">
+    <% #チャット %>
+    <div class="col-md-8">
+      <% if @group.group_users.approved.exists?(user_id: current_user.id) || @group.owner_id == current_user.id %>
+        <h5 class="font-weight-bold">グループ掲示板</h5>
+        <div class="card shadow-sm">
+          <div id="group-posts-index" class="card-body p-3" style="min-height: 250px; max-height: 500px; overflow-y: auto;">
+            <%= render 'public/group_posts/index', group: @group %>
+          </div>
+          <div class="card-footer bg-white border-top-0">
+            <%= form_with model: [@group, GroupPost.new], local: false, class: "mb-0" do |f| %>
+              <div class="input-group">
+                <%= f.text_area :body, class: "form-control border-0 bg-light", placeholder: "メッセージを入力...", rows: 1 %>
+                <div class="input-group-append">
+                  <%= f.submit "送信", class: "btn btn-primary" %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <% #メンバーリストと承認待ち %>
+    <div class="col-md-4 mt-4 mt-md-0">
+      <% # 承認待ち %>
+      <% if @group.owner_id == current_user.id && @group.group_users.pending.exists? %>
+        <div class="card mb-4 border-warning shadow-sm">
+          <div class="card-header bg-warning text-dark font-weight-bold small py-2">承認待ちの申請</div>
+          <ul class="list-group list-group-flush small">
+            <% @group.group_users.pending.each do |gu| %>
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <%= gu.user.name %>
+                <div>
+                  <%= link_to '承認', group_group_user_path(@group, gu), method: :patch, class: "text-success mr-2 font-weight-bold" %>
+                  <%= link_to '拒否', group_group_user_path(@group, gu), method: :delete, class: "text-danger" %>
+                </div>
+              </li>
             <% end %>
           </ul>
         </div>
       <% end %>
 
-      <hr>
-      <div class="group-chat-container">
-        <h4>グループ掲示板</h4>
-
-        <% #メッセージが表示されるエリア %>
-        <div id="group-posts-index">
-          <%= render 'public/group_posts/index', group: @group %>
+      <% #メンバーリスト %>
+      <div class="card shadow-sm">
+        <div class="card-header bg-white font-weight-bold d-flex justify-content-between align-items-center">
+          <span>参加メンバー</span>
+          <span class="badge badge-light border"><%= @group.group_users.approved.count %>人</span>
         </div>
-
-        <% #投稿用フォーム %>
-        <div class="mt-3">
-          <%= form_with model: [@group, GroupPost.new], local: false do |f| %>
-            <div>
-              <%= f.text_area :body, class: "form-control", placeholder: "メッセージを入力...", rows: 1 %>
-              <div>
-                <%= f.submit "送信", class: "btn btn-primary" %>
-              </div>
-            </div>
-          <% end %>
+        <div class="card-body p-0" style="max-height: 400px; overflow-y: auto;">
+          <ul class="list-group list-group-flush">
+            <% @group.group_users.approved.each do |gu| %>
+              <li class="list-group-item d-flex align-items-center">
+                <i class="fas fa-user-circle text-muted mr-2"></i>
+                <span class="text-truncate mr-auto"><%= gu.user.name %></span>
+                <% if gu.user == @group.owner %>
+                  <span class="badge badge-warning" style="font-size: 0.7rem;">オーナー</span>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
         </div>
       </div>
-
     </div>
   </div>
 </div>
