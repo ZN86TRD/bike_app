@@ -21,23 +21,5 @@
         </div>
       </div>
     </div>
-
-    <div class="col-md-3">
-      <div class="card bg-info text-white shadow-sm mb-4">
-        <div class="card-body text-center">
-          <h5 class="card-title">コメント総数</h5>
-          <h2 class="display-4"><%= @comments_count %></h2>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-3">
-      <div class="card bg-secondary text-white shadow-sm mb-4">
-        <div class="card-body text-center">
-          <h5 class="card-title">退会済みユーザー</h5>
-          <h2 class="display-4"><%= User.where(is_active: false).count %></h2>
-        </div>
-      </div>
-    </div>
   </div>
 </div>
