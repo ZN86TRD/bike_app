@@ -11,7 +11,7 @@ class Admin::UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    # 強制的に is_active を false (退会状態) に更新する
+    # is_active を falseに
     if @user.update(is_active: false)
       flash[:notice] = "ユーザーを退会処理しました。"
       redirect_to admin_user_path(@user)
