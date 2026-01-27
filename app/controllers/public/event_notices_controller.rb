@@ -1,5 +1,5 @@
 class Public::EventNoticesController < ApplicationController
-    before_action :authenticate_user!
+  before_action :authenticate_user!
 
   def new
     @group = Group.find(params[:group_id])
@@ -15,9 +15,9 @@ class Public::EventNoticesController < ApplicationController
     
     # バリデーション：タイトルまたは本文が空の場合
     if @title.blank? || @body.blank?
-        flash.now[:alert] = "タイトルと本文は必須項目です。"
-        render :new
-        return # 送信中断
+      flash.now[:alert] = "タイトルと本文は入力してください。"
+      render :new
+      return # 送信中断
     end
 
     # グループメンバー全員(確認のため自身含む)
