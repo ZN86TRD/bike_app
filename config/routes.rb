@@ -55,6 +55,8 @@ Rails.application.routes.draw do
         #退会確認_名前パス
         get 'confirm_withdraw'
       end
+
+      resources :bikes
     end
 
     #検索(ransack仕様)

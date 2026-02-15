@@ -1,0 +1,10 @@
+ja:
+  enums:
+    bike:
+      bike_type:
+        road_bike: "ロードバイク"
+        cross_bike: "クロスバイク"
+        mountain_bike: "マウンテンバイク"
+        minivelo: "ミニベロ"
+        gravel_bike: "グラベルロード"
+        other: "その他"

@@ -1,0 +1,31 @@
+<%= form_with model: [@user, @bike], local: true do |f| %>
+  
+    <div class="form-group mb-3">
+      <%= f.label :image, "愛車の写真" %>
+      <%= f.file_field :image, accept: 'image/jpeg', class: "form-control-file" %>
+    </div>
+  
+    <div class="form-group mb-3">
+      <%= f.label :maker, "メーカー (必須)" %>
+      <%= f.text_field :maker, class: "form-control", required: true %>
+    </div>
+  
+    <div class="form-group mb-3">
+      <%= f.label :name, "モデル名・車種 (必須)" %>
+      <%= f.text_field :name, class: "form-control", required: true %>
+    </div>
+  
+    <div class="form-group mb-3">
+      <%= f.label :bike_type, "カテゴリー" %>
+      <%= f.select :bike_type, Bike.bike_types.keys.map { |k| [t("enums.bike.bike_type.#{k}"), k] }, {}, class: "form-select" %>
+    </div>
+  
+    <div class="form-group mb-4">
+      <%= f.label :component, "メインコンポーネント (任意)" %>
+      <%= f.text_field :component, class: "form-control", placeholder: "例: Shimano 105" %>
+    </div>
+  
+    <% submit_text = @bike.new_record? ? "ガレージに登録する" : "変更を保存する" %>
+    <%= f.submit submit_text, class: "btn btn-success w-100" %>
+  
+  <% end %>
