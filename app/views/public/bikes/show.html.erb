@@ -1,0 +1,68 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <h2 class="mb-4">バイク詳細</h2>
+
+      <div class="card-img-top bg-dark text-center position-relative" style="height: 500px;">
+      <% if @bike.image.attached? %>
+        <%= image_tag @bike.image.variant(resize_to_limit: [1200, 1200]).processed,
+            class: "w-100 h-100 shadow-sm",
+            style: "object-fit: contain; cursor: pointer;",
+            data: { toggle: "modal", target: "#imageModal" } %>
+        <div class="position-absolute p-2 bg-dark text-white rounded" style="bottom: 10px; right: 10px; opacity: 0.7; pointer-events: none;">
+          <i class="fas fa-search-plus"></i> 拡大
+        </div>
+      <% else %>
+        <div class="d-flex justify-content-center align-items-center text-muted h-100">
+          <i class="fas fa-bicycle fa-5x"></i>
+          <span class="ml-3">No Image</span>
+        </div>
+      <% end %>
+    </div>
+
+        <div class="card-body p-4">
+          <h3 class="card-title fw-bold mb-4"><%= @bike.maker %> / <%= @bike.name %></h3>
+          
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <th style="width: 30%;" class="bg-light text-center">カテゴリー</th>
+                <td><%= @bike.bike_type_i18n %></td>
+              </tr>
+              <tr>
+                <th class="bg-light text-center">コンポーネント</th>
+                <td><%= @bike.component.presence || "未登録" %></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="d-flex justify-content-between mt-4">
+            <%= link_to "ガレージに戻る", user_bikes_path(@user), class: "btn btn-outline-secondary" %>
+            
+            <% if @user == current_user %>
+              <div>
+                <%= link_to "編集する", edit_user_bike_path(@user, @bike), class: "btn btn-success mr-2" %>
+                <%= link_to "削除する", user_bike_path(@user, @bike), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn btn-danger" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content bg-transparent border-0 shadow-none">
+          <div class="modal-body p-0 position-relative text-center">
+            <button type="button" class="close text-white position-absolute" style="top: -30px; right: -30px; font-size: 2.5rem; opacity: 1; text-shadow: 0 0 5px black;" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+
+            <% if @bike.image.attached? %>
+              <%= image_tag @bike.image, class: "img-fluid rounded shadow-lg", style: "max-height: 90vh;" %>
+            <% end %>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

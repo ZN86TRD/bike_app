@@ -1,0 +1,38 @@
+<div class="container mt-5">
+  <div class="row mb-4">
+    <div class="col-12 d-flex justify-content-between align-items-center">
+      <h2><%= @user.name %>さんのマイガレージ</h2>
+      <% if @user == current_user %>
+        <%= link_to "＋ 新しい愛車を登録", new_user_bike_path(@user), class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="row">
+    <% @bikes.each do |bike| %>
+      <div class="col-md-4 mb-4">
+        <div class="card shadow-sm h-100">
+          <%= link_to user_bike_path(@user, bike) do %>
+            <% if bike.image.attached? %>
+              <%= image_tag bike.image.variant(resize_to_fill: [300, 200]).processed, class: "card-img-top" %>
+            <% else %>
+              <div class="bg-light d-flex justify-content-center align-items-center text-muted" style="height: 200px;">No Image</div>
+            <% end %>
+          <% end %>
+
+          <div class="card-body">
+            <h5 class="card-title fw-bold"><%= bike.maker %> / <%= bike.name %></h5>
+            <p class="card-text mb-2">
+              <%= bike.bike_type_i18n %>
+            </p>
+            
+            <%= link_to user_bike_path(@user, bike), class: "btn btn-sm btn-info w-100 text-white" do %>
+              詳細を確認する
+            <% end %>
+          </div>
+
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

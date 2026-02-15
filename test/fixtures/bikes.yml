@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id: 1
+  maker: MyString
+  model_name: MyString
+  bike_type: 1
+  component: MyString
+
+two:
+  user_id: 1
+  maker: MyString
+  model_name: MyString
+  bike_type: 1
+  component: MyString
