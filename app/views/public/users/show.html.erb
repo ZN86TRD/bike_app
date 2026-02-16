@@ -91,7 +91,7 @@
             <tr>
               <td style="width: 100px;">
                 <% if post.image.attached? %>
-                  <%= image_tag post.image.variant(resize_to_limit: [100, 100]).processed, class: "img-thumbnail" %>
+                  <%= image_tag post.image.variant(resize_to_fill: [100, 70]).processed %>
                 <% else %>
                   <div class="bg-light text-center py-3 text-muted" style="font-size: 0.8rem;">No Image</div>
                 <% end %>
