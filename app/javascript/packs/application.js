@@ -16,3 +16,47 @@ import "../stylesheets/application";
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
+
+//プレビュー機能(選択時に実行)
+$(document).on('turbolinks:load', function() {
+  //プロフィール画像プレビュー
+  $('#user-image-input').on('change', function(e) {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    if (file && file.type.match('image.*')) {
+      reader.onload = function(e) {
+        $('#image-preview').attr('src', e.target.result);
+      }
+      reader.readAsDataURL(file);
+    }
+  });
+
+  //ガレージ機能プレビュー
+  $('#bike-image-input').on('change', function(e) {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    if (file && file.type.match('image.*')) {
+      reader.onload = function(e) {
+        $('#bike-image-preview').attr('src', e.target.result);
+        $('#bike-preview-container').removeClass('d-none');
+      }
+      reader.readAsDataURL(file);
+    }
+  });
+
+  //新規投稿プレビュー
+  $('#post-image-input').on('change', function(e) {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+
+    if (file && file.type.match('image.*')) {
+      reader.onload = function(e) {
+        $('#post-image-preview').attr('src', e.target.result);
+        $('#post-preview-container').removeClass('d-none');
+      }
+      reader.readAsDataURL(file);
+    }
+  });
+});

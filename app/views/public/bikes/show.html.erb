@@ -3,13 +3,13 @@
     <div class="col-md-8">
       <h2 class="mb-4">バイク詳細</h2>
 
-      <div class="card-img-top bg-dark text-center position-relative" style="height: 500px;">
+      <div class="card-img-top text-center position-relative" style="height: 500px;">
       <% if @bike.image.attached? %>
         <%= image_tag @bike.image.variant(resize_to_limit: [1200, 1200]).processed,
             class: "w-100 h-100 shadow-sm",
             style: "object-fit: contain; cursor: pointer;",
             data: { toggle: "modal", target: "#imageModal" } %>
-        <div class="position-absolute p-2 bg-dark text-white rounded" style="bottom: 10px; right: 10px; opacity: 0.7; pointer-events: none;">
+        <div class="position-absolute p-2 rounded" style="bottom: 10px; right: 10px; opacity: 0.7; pointer-events: none;">
           <i class="fas fa-search-plus"></i> 拡大
         </div>
       <% else %>

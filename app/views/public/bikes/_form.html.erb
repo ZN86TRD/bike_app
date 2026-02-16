@@ -1,8 +1,17 @@
 <%= form_with model: [@user, @bike], local: true do |f| %>
   
-    <div class="form-group mb-3">
-      <%= f.label :image, "愛車の写真" %>
-      <%= f.file_field :image, accept: 'image/jpeg', class: "form-control-file" %>
+    <div class="form-group mb-3 text-center">
+      <%= f.label :image, "サムネイル写真", class: "d-block mb-2" %>
+      
+      <div id="bike-preview-container" class="<%= 'd-none' unless @bike.image.attached? %> mb-3">
+        <% if @bike.image.attached? %>
+          <%= image_tag @bike.image.variant(resize_to_limit: [400, 300]).processed, id: "bike-image-preview", class: "img-fluid rounded shadow-sm", style: "max-height: 200px; object-fit: contain;" %>
+        <% else %>
+          <img id="bike-image-preview" src="" class="img-fluid rounded shadow-sm" style="max-height: 200px; object-fit: contain;">
+        <% end %>
+      </div>
+
+      <%= f.file_field :image, accept: 'image/jpeg', id: "bike-image-input", class: "form-control-file d-block mx-auto" %>
     </div>
   
     <div class="form-group mb-3">
