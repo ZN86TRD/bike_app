@@ -74,3 +74,5 @@ gem 'active_storage_validations'
 gem 'geocoder'
 
 gem 'enum_help'
+
+gem 'devise-i18n'

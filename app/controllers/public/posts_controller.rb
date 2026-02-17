@@ -13,7 +13,7 @@ class Public::PostsController < ApplicationController
     if @post.save
       redirect_to post_path(@post), notice: "投稿に成功しました！"
     else
-      @posts = Post.all
+      @posts = Post.all.order(created_at: :desc).page(params[:page]).per(10)
       render :index 
     end
   end
