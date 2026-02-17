@@ -24,11 +24,11 @@
             <%= f.file_field :image, accept: 'image/jpeg,image/jpg', id: "post-image-input", class: "form-control-file" %>
           </div>
           <div class="form-group mb-3">
-            <%= f.label :title, "タイトル" %>
+            <%= f.label :title, "タイトル(必須)" %>
             <%= f.text_field :title, class: "form-control" %>
           </div>
           <div class="form-group mb-3">
-            <%= f.label :body, "本文" %>
+            <%= f.label :body, "本文(必須)" %>
             <%= f.text_area :body, class: "form-control", rows: 5 %>
           </div>
           <div class="form-group">
