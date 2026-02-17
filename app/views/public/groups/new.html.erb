@@ -4,23 +4,25 @@
       <h2 class="mb-4">新規グループ作成</h2>
 
       <%= form_with model: @group, local: true do |f| %>
+        <%= render 'public/shared/error_messages', obj: @group %>
         <div class="form-group mb-3">
-          <%= f.label :genre_id, "ジャンル" %>
+          <%= f.label :genre_id, "ジャンル(必須)" %>
           <%= f.collection_select :genre_id, @genres, :id, :name, { include_blank: "ジャンルを選択" }, { class: "form-control", required: true } %>
         </div>
 
         <div class="form-group mb-3">
-          <%= f.label :name, "グループ名" %>
+          <%= f.label :name, "グループ名(必須)" %>
           <%= f.text_field :name, class: "form-control", placeholder: "グループ名を入力" %>
         </div>
 
         <div class="form-group mb-4">
-          <%= f.label :description, "グループ紹介文" %>
+          <%= f.label :description, "グループ紹介文(必須)" %>
           <%= f.text_area :description, class: "form-control", rows: 5, placeholder: "グループの説明を入力" %>
         </div>
 
-        <div class="text-center">
-          <%= f.submit "グループを作成する", class: "btn btn-success px-5" %>
+        <div class="d-flex justify-content-between mt-4">
+          <%= link_to "戻る", groups_path(@group), class: "btn btn-outline-secondary w-50 mr-2" %>
+          <%= f.submit "グループを作成する", class: "btn btn-success w-50" %>
         </div>
       <% end %>
     </div>

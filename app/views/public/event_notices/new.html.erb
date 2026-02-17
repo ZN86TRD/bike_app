@@ -17,6 +17,9 @@
       <%= f.label :body, "本文" %>
       <%= f.text_area :body, class: "form-control", rows: 10, required: true %>
     </div>
-    <%= f.submit "送信する", class: "btn btn-primary shadow-sm" %>
+    <div class="d-flex justify-content-between align-items-center">
+      <%= f.submit "送信する", class: "btn btn-primary shadow-sm" %>
+      <%= link_to "グループ詳細へ戻る", group_path(@group), class: "btn btn-outline-secondary shadow-sm" %>
+    </div>
   <% end %>
 </div>
