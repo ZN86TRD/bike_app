@@ -65,16 +65,13 @@
             <% end %>
           </div>
         <% end %>
-      </div>
-      <div class="container">
-        <% if flash[:notice] %>
-          <div class="alert alert-success text-center"><%= flash[:notice] %></div>
-        <% end %>
-        <% if flash[:alert] %>
-          <div class="alert alert-danger text-center"><%= flash[:alert] %></div>
+        <% flash.each do |key, message| %>
+          <% alert_class = (key == 'notice') ? 'success' : 'danger' %>
+          <div class="alert alert-<%= alert_class %> m-0 rounded-0 border-0 text-center shadow-sm" style="padding: 10px 0; font-weight: bold; font-size: 0.9rem;">
+            <%= message %>
+          </div>
         <% end %>
       </div>
-
       <main>
         <%= yield %>
       </main>
