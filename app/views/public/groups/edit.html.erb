@@ -4,6 +4,7 @@
       <h2 class="mb-4">グループ情報編集</h2>
 
       <%= form_with model: @group, local: true do |f| %>
+        <%= render 'public/shared/error_messages', obj: @group %>
         <div class="form-group mb-3">
           <%= f.label :genre_id, "ジャンル" %>
           <%= f.collection_select :genre_id, @genres, :id, :name, {}, { class: "form-control" } %>

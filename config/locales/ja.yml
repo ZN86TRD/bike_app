@@ -8,3 +8,20 @@ ja:
         minivelo: "ミニベロ"
         gravel_bike: "グラベルロード"
         other: "その他"
+  activerecord:
+    models:
+      user: "ユーザー"
+      group: "グループ"
+      post: "投稿"
+    attributes:
+      user:
+        name: "名前"
+        email: "メールアドレス"
+        introduction: "自己紹介"
+      group:
+        name: "グループ名"
+        introduction: "紹介文"
+      post:
+        title: "タイトル"
+        body: "本文"
+        address: "スポットの場所"
