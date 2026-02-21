@@ -1,5 +1,12 @@
 <footer class="bg-dark text-white py-4 mt-auto">
   <div class="container text-center">
     <p class="mb-0 small text-secondary"><i class="fas fa-bicycle"></i>Bike_app</p>
+    <div class="admin-link">
+      <% unless admin_signed_in? %>
+        <%= link_to new_admin_session_path, class: "text-secondary", style: "text-decoration: none; opacity: 0.2;" do %>
+          <i class="fas fa-cog"></i>
+        <% end %>
+      <% end %>
+    </div>
   </div>
 </footer>
