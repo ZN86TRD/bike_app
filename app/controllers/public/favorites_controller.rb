@@ -15,7 +15,8 @@ class Public::FavoritesController < ApplicationController
   end
 
   def index
-    favorite_post_ids = current_user.favorites.pluck(:post_id)
+    @user = User.find(params[:user_id])
+    favorite_post_ids = @user.favorites.pluck(:post_id)
     @favorite_posts = Post.where(id: favorite_post_ids).order(created_at: :desc).page(params[:page]).per(10)
   end
 end

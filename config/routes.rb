@@ -39,9 +39,6 @@ Rails.application.routes.draw do
       resource :favorites, only: [:create, :destroy]
     end
 
-    #自身のいいね一覧
-    get 'favorites' => 'favorites#index'
-
     # マイページ名前パス
     get 'users/mypage' => 'users#show', as: 'mypage'
    
@@ -50,6 +47,8 @@ Rails.application.routes.draw do
       resource :relationships, only: [:create, :destroy]
       get 'followings' => 'relationships#followings', as: 'followings'
       get 'followers' => 'relationships#followers', as: 'followers'
+
+      resources :favorites, only: [:index]
 
       member do
         #退会確認_名前パス
