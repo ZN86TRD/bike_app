@@ -1,11 +1,13 @@
 <div class="container mt-5">
-  <h2>いいねした投稿一覧</h2>
+  <h2><%= @user.name %>さんのいいねした投稿一覧</h2>
   <div class="row">
     <% @favorite_posts.each do |post| %>
       <div class="col-md-4 mb-3">
         <div class="card shadow-sm">
           <% if post.image.attached? %>
             <%= image_tag post.image.variant(resize_to_fill: [300, 200]).processed, class: "card-img-top" %>
+          <% else %>
+            <%= image_tag 'no_image.jpg', size: "300x200", class: "card-img-top", style: "object-fit: cover; background-color: #eee;" %>
           <% end %>
           <div class="card-body">
             <h5><%= link_to post.title, post_path(post) %></h5>
