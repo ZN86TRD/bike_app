@@ -1,7 +1,7 @@
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-8 mx-auto">
-      <h2>フォロー一覧</h2>
+      <h2><%= @user.name %>さんのフォロー一覧</h2>
       
       <% if @users.exists? %>
         <table class="table table-hover mt-3">
@@ -31,7 +31,10 @@
       <% end %>
 
       <div class="mt-4">
-        <%= link_to "マイページへ戻る", user_path(current_user), class: "btn btn-secondary" %>
+        <%= link_to "マイページへ戻る", user_path(current_user), class: "btn btn-outline-secondary" %>
+      </div>
+      <div class="d-flex justify-content-center mt-4 mb-5">
+        <%= paginate @users %>
       </div>
     </div>
   </div>
