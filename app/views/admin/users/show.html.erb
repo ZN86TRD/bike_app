@@ -57,7 +57,7 @@
             </tr>
           </thead>
           <tbody>
-            <% @user.posts.each do |post| %>
+            <% @posts.each do |post| %>
               <tr>
                 <td><%= post.id %></td>
                 <td><%= post.title %></td>
@@ -74,6 +74,9 @@
             <% end %>
           </tbody>
         </table>
+      </div>
+      <div class="d-flex justify-content-center mt-3">
+        <%= paginate @posts %>
       </div>
     </div>
   </div>
