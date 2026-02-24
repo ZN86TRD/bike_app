@@ -27,6 +27,9 @@
       <% end %>
     </tbody>
   </table>
+  <div class="d-flex justify-content-center mt-4">
+    <%= paginate @groups %>
+  </div>
 
   <% if @groups.empty? %>
     <p class="text-center mt-5 text-muted">グループは存在しません。</p>
