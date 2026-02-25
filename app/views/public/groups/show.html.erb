@@ -71,7 +71,7 @@
     <div class="col-md-8">
       <% if @group.group_users.approved.exists?(user_id: current_user.id) || @group.owner_id == current_user.id %>
         <h5 class="font-weight-bold">グループ掲示板</h5>
-        <div class="card shadow-sm">
+        <div class="card shadow-sm mb-3">
           <div id="group-posts-index" class="card-body p-3" style="min-height: 250px; max-height: 500px; overflow-y: auto;">
             <%= render 'public/group_posts/index', group: @group %>
           </div>
