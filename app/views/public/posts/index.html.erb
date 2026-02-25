@@ -49,6 +49,7 @@
             <th>タイトル</th>
             <th>本文</th>
             <th>投稿者</th>
+            <th class="text-nowrap">投稿日時</th>
           </tr>
         </thead>
         <tbody>
@@ -61,8 +62,8 @@
                   <div class="bg-light text-center py-3 text-muted" style="font-size: 0.7rem; width: 100px;">No Image</div>
                 <% end %>
               </td>
-              <td class="fw-bold">
-                <%= link_to post.title, post_path(post) %>
+              <td class="font-weight-bold">
+                <%= link_to truncate(post.title, length: 15), post_path(post), style: "cursor: default;", title: post.title %>
                 <div class="d-flex">
                     <%= render "public/favorites/btn", post: post %>
                   <span class="small  mt-1 ml-2 text-muted font-weight-normal">
@@ -70,10 +71,15 @@
                   </span>
                 </div>
               </td>
-              <td><%= truncate(post.body, length: 30) %></td>
-              <td>
+              <td><%= truncate(post.body, length: 19) %></td>
+              <td class="text-nowrap">
                 <%= image_tag post.user.get_profile_image(30, 30), class: "rounded-circle me-1" %>
-                <%= post.user.name %>
+                <span title="<%= post.user.name %>" style="cursor: default;">
+                  <%= truncate(post.user.name, length: 6) %>
+                </span>
+              </td>
+              <td class="small text-muted text-nowrap" title="<%= post.created_at.strftime('%Y/%m/%d %H:%M') %>" style="cursor: default;">
+                <%= time_ago_in_words(post.created_at) %>前
               </td>
             </tr>
           <% end %>
