@@ -61,12 +61,23 @@
 
             <% #コメント投稿フォーム %>
             <div class="mt-4">
+            <% if user_signed_in? && !current_user.guest_user? %>
               <%= form_with model: [@post, @post_comment], local: false do |f| %>
                 <div class="form-group">
                   <%= f.text_area :comment, rows: '3', class: "form-control", placeholder: "コメントを入力" %>
                 </div>
                 <%= f.submit "送信する", class: "btn btn-primary btn-block" %>
               <% end %>
+            <% else %>
+              <div class="card bg-light">
+                <div class="card-body p-3 text-center">
+                  <p class="card-text small text-muted mb-0">
+                  <i class="fas fa-exclamation-triangle text-warning mr-2 mt-1"></i>
+                      ゲストユーザーはコメントできません。
+                  </p>
+                </div>
+              </div>
+            <% end %>
             </div>
           </div>
         </div>

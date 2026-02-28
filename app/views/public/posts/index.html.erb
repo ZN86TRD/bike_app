@@ -2,8 +2,9 @@
   <div class="row">
     <div class="col-md-3">
       <% if current_user.guest_user? %>
-        <div class="card border-info mb-3 shadow-sm">
+        <div class="card mb-3">
           <div class="card-body">
+            <i class="fas fa-exclamation-triangle text-warning"></i>
             <p class="card-text small text-muted">
               投稿機能を利用するには、新規登録またはログインを行ってください。
             </p>
