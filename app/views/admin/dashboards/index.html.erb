@@ -1,23 +1,55 @@
 <div class="container mt-5">
   <h2 class="mb-4 bg-light p-2 border-start border-4 border-primary">管理者ダッシュボード</h2>
 
-  <div class="row mt-4">
-    <div class="col-md-3">
-      <div class="card bg-primary text-white shadow-sm mb-4">
-        <div class="card-body text-center">
-          <h5 class="card-title">ユーザー総数</h5>
-          <h2 class="display-4"><%= @users_count %></h2>
-          <%= link_to "一覧を見る", admin_users_path, class: "text-white small text-decoration-none" %>
+  <div class="row">
+    <div class="col-12 mb-4">
+      <div class="card shadow-sm border-0 bg-info text-white" style="border-radius: 10px;">
+        <div class="card-body d-flex align-items-center justify-content-between px-4 py-3">
+          <div>
+            <h5 class="card-title mb-0 opacity-75">
+              <i class="fas fa-users mr-2"></i>ユーザー総数
+            </h5>
+            <small>現在のコミュニティメンバー</small>
+          </div>
+          <h2 class="display-4 font-weight-bold mb-0"><%= @users_count %></h2>
+          <div>
+            <%= link_to admin_users_path, class: "btn btn-light btn-sm text-info shadow-sm" do %>
+              一覧を確認する <i class="fas fa-arrow-right ml-1"></i>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="col-md-3">
-      <div class="card bg-success text-white shadow-sm mb-4">
-        <div class="card-body text-center">
-          <h5 class="card-title">投稿総数</h5>
-          <h2 class="display-4"><%= @posts_count %></h2>
-          <p class="small mb-0">本日: <%= @today_posts_count %>件</p>
+    <div class="col-12">
+      <div class="card shadow-sm border-0">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h5 class="card-title font-weight-bold text-secondary mb-0">
+              <i class="fas fa-chart-line mr-2"></i>直近1週間の投稿状況
+            </h5>
+            <div class="badge badge-pill badge-light text-secondary px-3 py-2">
+              累計投稿数: <%= @posts_count %>件 / 本日: <%= @today_posts_count %>件
+            </div>
+          </div>
+          
+          <div class="d-flex align-items-end justify-content-around bg-light rounded p-4" style="height: 250px;">
+            <% (6.days.ago.to_date..Date.current).each do |date| %>
+              <% count = @post_counts_by_day[date.to_s] || 0 %>
+              <% height = [count * 10, 100].min %>
+              
+              <div class="text-center" style="width: 10%;">
+                <div class="small font-weight-bold mb-1 text-primary"><%= count %></div>
+                <div class="progress flex-column-reverse mx-auto shadow-sm" style="height: 150px; width: 35px; background-color: #dee2e6; border-radius: 5px;">
+                  <div class="progress-bar bg-primary" role="progressbar" 
+                       style="height: <%= height %>%; transition: height 0.8s ease-out;" 
+                       aria-valuenow="<%= height %>" aria-valuemin="0" aria-valuemax="100">
+                  </div>
+                </div>
+                <div class="small text-muted mt-2"><%= date.strftime("%m/%d") %></div>
+              </div>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>
